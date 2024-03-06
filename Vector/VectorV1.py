@@ -3,6 +3,7 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from keras.optimizers import Adam
 from keras.callbacks import LearningRateScheduler, EarlyStopping
 from keras.preprocessing.image import ImageDataGenerator
+import matplotlib.pyplot as plt
 
 def scheduler(epoch, lr):
     if epoch < 10:
@@ -50,3 +51,22 @@ history = model.fit(datagen.flow(X_train_reshaped, y_train, batch_size=32),
                     epochs=50, 
                     validation_data=(X_test_reshaped, y_test),
                     callbacks=[LearningRateScheduler(scheduler), early_stopping])
+
+# Plot training and validation accuracy
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
+
+# Plot training and validation loss
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Training and Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+
